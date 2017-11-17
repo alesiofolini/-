@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>?</title>
+</head>
+<body>
+<input type="button" id="boton" onclick="start()" value="?"/>
+<div id="contenido"></div>
+<script>
+var creg;
+var cont = document.getElementById("contenido");
+var clicks = 0;
+
+var start = function(){
+	if (clicks == 0) {
+		startTimer();
+		clicks += 1;
+	}
+	else if (clicks == 1) {
+		desactivarBomba();
+		clicks += 1;
+	}
+}
+
+function startTimer() {
+    var timer = 60*5, minutes, seconds, display = document.createElement('span');
+	cont.appendChild(display);
+    creg = setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            stopTimer();
+			gameover("Explotó todo");
+        }
+    }, 1000);
+}
+
+function stopTimer() {
+	clearInterval(creg);
+}
+
+function desactivarBomba() {
+	var m = document.createElement("p");
+    var t1 = document.createTextNode("Qué cable cortás?");
+    m.appendChild(t1);
+    cont.appendChild(m);
+	var btnverde = document.createElement("BUTTON");
+    var tverde = document.createTextNode("VERDE");
+	btnverde.onclick = function(){gameover("Explotó todo")};
+    btnverde.appendChild(tverde);
+    cont.appendChild(btnverde);
+	var btnazul = document.createElement("BUTTON");
+    var tazul = document.createTextNode("AZUL");
+	btnazul.onclick = function(){gameover("Explotó todo")};
+    btnazul.appendChild(tazul);
+    cont.appendChild(btnazul);
+	var btnrojo = document.createElement("BUTTON");
+    var trojo = document.createTextNode("ROJO");
+	btnrojo.onclick = function(){
+		stopTimer();
+		
+	};
+    btnrojo.appendChild(trojo);
+    cont.appendChild(btnrojo);
+}
+
+function gameover(mensaje) {
+	document.body.innerHTML = '';
+	var m = document.createElement("p");
+    var t1 = document.createTextNode(mensaje);
+    m.appendChild(t1);
+    document.body.appendChild(m);
+	var h = document.createElement("H1");
+    var t2 = document.createTextNode("Game Over");
+    h.appendChild(t2);
+    document.body.appendChild(h);
+}
+</script>
+</body>
+</html>
